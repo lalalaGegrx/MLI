@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    h1{
+        font-family: "Brush Script MT";
+        font-weight: bolder;
+        font-size: 100px;
+    }
+    body{
+        background-image: url('/static/logo.png');
+        background-size: 100%;
+    }
+    .container{
+        margin-top: 38vw;
+    }
+    [class*="col-"] {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+</style>
+
+<body>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ message[0] }}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message[1] }}
+    </div>
+{% endfor %}
+
+<!-- Navigate -->
+<div class="row bg-dark">
+    <div class="col-8">
+    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style="font-size:40px;color:#FF7F50;font-weight: bolder;"> Get Start</button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="{{ url_for('algorithm.show_lr', id=1) }}" style="font-size:18px">Linear Regression</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{{ url_for('algorithm.show_lr', id=2) }}" style="font-size:18px">Logistic Regression</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item disabled" href="#" style="font-size:18px">Decision Tree</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item disabled" href="#" style="font-size:18px">Random Forest</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item disabled" href="#" style="font-size:18px">SVM</a>
+    </div>
+    </div>
+    <div class="col-2">
+        <input class="form-control" type="text" placeholder="Baby!  Just tell me " style="margin-top: 17px;">
+    </div>
+    <div class="col-1">
+        <button class="btn btn-dark" type="submit" style="margin-top: 13px;color:#FF7F50;font-weight: bolder;font-size:21px">Search</button>
+    </div>
+    <div class="col-1">
+        <a class="btn btn-warning" href="{{ url_for('login.hidden') }}" style="margin-top:13px;font-size: 20px;font-weight: bolder;color:#FFF8DC">Click</a>
+    </div>
+</div>
+<div class="container row">
+    <a class="btn btn-warning float-right" style="margin-left:42vw;font-size:35px;font-weight:bolder;color:#FFF8DC" href="{{ url_for('login.login_flash') }}">Sign in</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+  body {
+      position: relative;
+  }
+  ul li a{
+      margin-top: 3px;
+      font-size: 25px;
+  }
+  #section1, #section2, #section3, #section4{
+      background-image:url("/static/back.png");
+  }
+  .con{
+      width:100%;
+  }
+  .pic{
+      float:right;
+      width:50%;
+  }
+  .text{
+      float:left;
+      width:50%;
+  }
+</style>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ message[0] }}">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message[1] }}
+    </div>
+{% endfor %}
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" href="{{ url_for('login.logo') }}" style="color:#FF7F50;font-size:40px;font-weight:bolder">Home</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#section1"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section2"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section3"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section4"></a>
+        </li>
+    </ul>
+</nav>
+
+<div id="section1" class="container-fluid" style="padding-top:110px;padding-bottom:20px;">
+    <h1 style="color:#FF7F50;font-weight:bolder" class="text-center font-italic">{{ algorithm_name }}</h1>
+    <h2 class="text-center font-italic text-warning">on</h2>
+    <h1 style="color:#FF7F50;font-weight:bolder;margin-bottom:20px" class="text-center font-italic">{{ dataset_name }}</h1>
+    <h2 style="font-size:30px;font-weight:bold;" class="font-italic">Part of Prediction</h2>
+    <table class="table table-striped table-hover">
+        <thead class="bg-warning">
+        <tr>
+            <th> </th>
+            {% for feature in features %}
+                <th>{{ feature }}</th>
+            {% endfor %}
+            <th class="text-danger">Label</th>
+            <th class="text-info">Predict</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for piece in x %}
+            <tr>
+                <th>{{ loop.index0 }}</th>
+                {% for d in piece %}
+                    <th>{{ d }}</th>
+                {% endfor %}
+                <th class="text-danger">{{ y_test[loop.index0] }}</th>
+                <th class="text-info">{{ y_pre[loop.index0] }}</th>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th>...</th>
+            {% for i in features %}
+                <th>...</th>
+            {% endfor %}
+            <th>...</th>
+            <th>...</th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="section2" class="container-fluid bg-warning" style="padding-top:20px;padding-bottom:80px">
+    <h2 style="font-size:30px;font-weight:bold;" class="font-italic">Target</h2>
+    <div class="con">
+        <div class="text">
+            <p style="font-size:22px;font-weight:bold;margin-top:10px">Accuracy in Inference: <span style="color:#FF7F50;font-size:22px">{{ accu }}</span></p>
+            <p style="font-size:22px;font-weight:bold;">Accuracy in Cross Validation: <span style="color:#FF7F50;font-size:22px">{{ cross }}</span></p>
+            <p>The First one is accuracy in test dataset. The second one is accuracy in validation dataset.</p>
+            <p style="font-size:22px;font-weight:bold;">F1-Score: <span style="color:#FF7F50;font-size:22px">{{ f1 }}</span></p>
+            <p>When precision is high, recall tends to be low and vice versa. F1 is harmonic average of precision and recall.</p>
+        </div>
+        <div class="pic">
+            <img src="/MLI/static/{{ userid }}.png" height="350px" width="450px" />
+        </div>
+    </div>
+</div>
+
+<div id="section3" class="container-fluid bg-secondary" style="padding-top:280px;padding-bottom:50px;">
+    <h2 style="font-size:30px;font-weight:bold;" class="font-italic">Predict for Yourself!</h2>
+        <table class="table table-striped table-hover">
+        <thead class="bg-warning">
+        <tr>
+            {% for feature in features %}
+                <th>{{ feature }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for d in x_personal %}
+                <th>{{ d }}</th>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-center" style="font-weight:bolder;font-size:25px">Predict: <span class="text-info">{{ y_personal }}</span></p>
+    <a class="btn btn-success" style="margin-top:20px;margin-left:38vw;font-size:20px;color:#FFF8DC;" href="{{ url_for('algorithm.show_result', pid=pid) }}">Get Another Random Data</a>
+</div>
+
+<div id="section4" class="container-fluid bg-secondary" style="padding-top:20px;padding-bottom:20px">
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Title</title>
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body {
+        position: relative;
+    }
+    ul li a{
+        margin-top: 3px;
+        font-size: 25px;
+    }
+    #section1, #section3, #section5, #section7{
+        background-image:url("/static/back.png");
+    }
+</style>
+
+{% for message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ message[0] }}" style="margin-top:85px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message[1] }}
+    </div>
+{% endfor %}
+
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <a class="navbar-brand" href="{{ url_for('login.logo') }}" style="color:#FF7F50;font-size:40px;font-weight:bolder">Home</a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#section1">DataSet</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section2"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section3">Preprocessing</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#section4"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section5">Model</a>
+        </li>
+        <li>
+            <a class="nav-link" href="#section6"></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#section7">Result</a>
+        </li>
+    </ul>
+</nav>
+
+<div id="section1" class="container-fluid" style="padding-top:120px;padding-bottom:50px">
+    <h1 style="margin-left:15px">Step 1. Dataset</h1>
+    <p class="text-center font-italic" style="color:#FF7F50;font-size:35px;margin-top:20px">We provide 3 optional datasets!</p>
+    <a class="btn btn-success" style="margin-top:15px;margin-left:44vw;font-size:30px;color:#FFF8DC;" href="{{ url_for('dataset.show_dataset') }}">Get Data</a>
+</div>
+
+<div id="section2" class="container-fluid bg-warning" style="padding-top:8px;padding-bottom:8px"></div>
+
+<div id="section3" class="container-fluid" style="padding-top:50px;padding-bottom:50px">
+    <h1 style="margin-left:15px">Setp 2. Preprocessing</h1>
+    <p style="font-size:35px;color:#FF7F50;margin-top:15px" class="text-center font-italic">Choose your preprocessing methods!</p>
+    <form class="form" method="post" action="{{ url_for('preprocessing.preprocess') }}">
+        <div class="row">
+            <div class="form-check col">
+                <label class="form-check-label">
+                    {{ form.Standardization(class="form-check-input", style="margin-left:20px") }}
+                    {{ form.Standardization.label(style="font-size:22px;margin-left:35px") }}
+                </label>
+            </div>
+            <div class="form-check col">
+                <label class="form-check-label">
+                    {{ form.Nothing(class="form-check-input") }}
+                    {{ form.Nothing.label(style="font-size:22px") }}
+                </label>
+            </div>
+            <div class="form-check col">
+                <label class="form-check-label">
+                    {{ form.Nothing_1(class="form-check-input") }}
+                    {{ form.Nothing_1.label(style="font-size:22px") }}
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            {{ form.submit(class="btn btn-success", style="margin-top:15px;margin-left:45vw;font-size:30px;color:#FFF8DC;") }}
+        </div>
+    </form>
+</div>
+
+<div id="section4" class="container-fluid bg-warning" style="padding-top:8px;padding-bottom:8px"></div>
+
+<div id="section5" class="container-fluid bg-info" style="padding-top:50px;padding-bottom:50px">
+    <h1 style="margin-left:10px">Step 3. Model </h1>
+    <p style="font-size:35px;color:#FF7F50;margin-top:15px" class="text-center font-italic">You have chosen <span style="font-weight:bolder">{{ name }}</span> Model</p>
+    <a class="btn btn-success" style="margin-top:15px;margin-left:39vw;font-size:30px;color:#FFF8DC;" href="#">Change from Home</a>
+</div>
+
+<div id="section6" class="container-fluid bg-warning" style="padding-top:8px;padding-bottom:8px"></div>
+
+<div id="section7" class="container-fluid bg-info" style="padding-top:50px;padding-bottom:50px">
+    <div class="row">
+        <p style="font-size:45px;color:#FF7F50;margin-top:12px;margin-left:36vw"><span style="font-weight:bolder">Now</span></p>
+        <a class="btn btn-success" style="margin-bottom: 30px;margin-top:15px;margin-left:18px;font-size:35px;color:#FFF8DC;" href="{{ url_for('algorithm.cal_result') }}">Get Result</a>
+        <p style="font-size:45px;color:#FF7F50;margin-top:12px;margin-left:18px"><span style="font-weight:bolder">!</span></p>
+    </div>
+</div>
+</body>
+</html>
