@@ -16,9 +16,6 @@ def register_extensions(app):
 
 def create_app():
     app = Flask('Machine Learning')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:wq738250@106.14.186.54:3306/mli'
-    app.config['SECRET_KEY'] = 'secretlalala111'
-    # app.config['csrf'] =
 
     # app.config.from_object(Config)
 
